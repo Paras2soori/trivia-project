@@ -13,7 +13,7 @@ class TriviaTestCase(unittest.TestCase):
     def setUp(self):
         """Define test variables and initialize app."""
         self.app = create_app()
-        self.client = self.app.test_client
+        self.client = self.app.test_client()
         self.database_name = "trivia_test"
         self.user = "postgres"
         self.pwd = "postgres"
@@ -42,10 +42,11 @@ class TriviaTestCase(unittest.TestCase):
 
     def test_retrieve_question(self):
         """Retrieve question test"""
-        res = self.client.__get__('/questions?page=1')
-        data = json.load(res.data)
+        res = self.client.get('/questions')
+        data = json.loads(res.data)
 
         # Status code
+        
         self.assertEqual(data['success'], True)
 
         # Questions
